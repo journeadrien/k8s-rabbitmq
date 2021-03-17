@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: worker
+  name: redis-worker
+spec:
+  selector:
+    app: worker
+status:
+  loadBalancer: {}
