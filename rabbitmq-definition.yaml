@@ -6,6 +6,13 @@ metadata:
     labels:
       app: broker
 spec:
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 500m
+      memory: 1Gi
   replicas: 1
   rabbitmq:
     additionalConfig: |

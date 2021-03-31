@@ -20,6 +20,8 @@ spec:
       - env:
         - name: RABBITMQ_HOST
           value: rabbitmq-master
+        - name: PYTHONUNBUFFERED
+          value: '1'
         image: rabbitmq-worker:v1
         name: rabbitmq-worker
         resources:
