@@ -3,12 +3,13 @@ create-namespace:
 	kubectl apply -f namespace.yaml
 
 # create rabbitmq broker
+# local registy: eval $(minikube docker-env)
 deploy-rabbitmq:
 	kubectl replace --force -f rabbitmq-definition.yaml
 log-rabbitmq:
 	kubectl logs rabbitmq-master-server-0 --tail=50 --namespace rabbitmq
 ui-rabbitmq:
-	kubectl -n rabbitmq port-forward "service/rabbitmq-master" 15672
+	kubectl -n rabbitmq port-forward "service/rabbitmq-master" 15672 &
 # create worker
 build-worker:
 	docker build -t rabbitmq-worker:v1 worker
