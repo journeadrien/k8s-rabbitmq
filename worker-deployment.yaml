@@ -3,7 +3,8 @@ kind: Deployment
 metadata:
   labels:
     app: worker
-  name: redis-worker
+  name: rabbitmq-worker
+  namespace: rabbitmq
 spec:
   replicas: 1
   selector:
@@ -17,10 +18,10 @@ spec:
     spec:
       containers:
       - env:
-        - name: REDIS_HOST
-          value: dns
-        image: redis-worker:v1
-        name: redis-worker
+        - name: RABBITMQ_HOST
+          value: rabbitmq-master
+        image: rabbitmq-worker:v1
+        name: rabbitmq-worker
         resources:
           requests:
             cpu: 100m

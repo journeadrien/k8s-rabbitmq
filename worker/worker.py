@@ -1,18 +1,23 @@
-import os
+#!/usr/bin/env python
+import pika, sys, os
+RABBITMQ_HOST = os.environ["RABBITMQ_HOST"]
+print("Worker init")
+def main():
+    credentials = pika.PlainCredentials('guest', 'guest')
+    parameters = pika.ConnectionParameters(host=RABBITMQ_HOST,
+                                        credentials=credentials)
+    connection = pika.BlockingConnection(parameters)
+    channel = connection.channel()
 
-from redis import StrictRedis
-from rq import Worker, Queue, Connection
-from utils import count_words_at_url
+    channel.queue_declare(queue='hello')
 
-listen = ['high', 'default', 'low']
+    def callback(ch, method, properties, body):
+        print(" [x] Received %r" % body)
 
-#REDIS_HOST = os.environ['REDIS_HOST']
-REDIS_HOST = "redis-master"
-print("REDIS_HOST : %s"%REDIS_HOST)
-REDIS_PORT = 6379
-conn = StrictRedis(host=REDIS_HOST, port=REDIS_PORT)
+    channel.basic_consume(queue='hello', on_message_callback=callback, auto_ack=True)
+
+    print(' [*] Waiting for messages. To exit press CTRL+C')
+    channel.start_consuming()
 
 if __name__ == '__main__':
-    with Connection(conn):
-        worker = Worker(map(Queue, listen), path="./")
-        worker.work()
+    main()

@@ -2,14 +2,18 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: job1
+  namespace: rabbitmq
 spec:
   backoffLimit: 5
   activeDeadlineSeconds: 60
   template:
     spec:
       containers:
-      - name: job1
-        image: redis-job:v1
+      - env:
+        - name: RABBITMQ_HOST
+          value: rabbitmq-master
+        name: job1
+        image: rabbitmq-job:v1
         command: ["python",  "job.py"]
       restartPolicy: Never
   backoffLimit: 1
