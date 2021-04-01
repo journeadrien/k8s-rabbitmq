@@ -9,18 +9,28 @@ def main():
     connection = pika.BlockingConnection(parameters)
     channel = connection.channel()
 
-    channel.queue_declare(queue='hello')
+    channel.queue_declare(queue='hello', auto_delete=True)
 
     def callback(ch, method, properties, body):
         print(" [x] Received %r" % body.decode())
-        time.sleep(30)
+        for _ in range(10000):
+            factorielle(100)
         print(" [x] Done")
         ch.basic_ack(delivery_tag = method.delivery_tag)
 
-    channel.basic_consume(queue='hello', on_message_callback=callback)
+    channel.basic_qos(prefetch_count=1)
+    channel.basic_consume(queue='hello', on_message_callback=callback, auto_ack=False)
 
     print(' [*] Waiting for messages. To exit press CTRL+C')
     channel.start_consuming()
+
+def factorielle(n):
+    """Ceci est une fonction récursive qui appelle
+   lui-même pour trouver la factorielle du nombre donné"""
+    if n == 1:
+        return n
+    else:
+        return n * factorielle(n - 1)
 
 if __name__ == '__main__':
     main()

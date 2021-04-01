@@ -15,6 +15,8 @@ build-worker:
 	docker build -t rabbitmq-worker:v1 worker
 deploy-worker:build-worker
 	kubectl replace --force -f worker-deployment.yaml
+delete-worker:
+	kubectl delete -f worker-deployment.yaml
 log-worker:
 	kubectl logs --tail=50 -l app=worker --namespace rabbitmq
 exec-worker:
@@ -22,7 +24,9 @@ exec-worker:
 stop-worker:
 	kubectl delete -f worker-deployment.yaml
 scale-worker:
-	kubectl replace --force -f hpa-v2.yml
+	kubectl replace --force -f hpa-v2.yaml
+delete-scale-worker:
+	kubectl delete -f hpa-v2.yaml
 
 # create job
 build-job:
@@ -31,3 +35,8 @@ launch-job: build-job
 	kubectl replace --force -f job.yaml
 log-job:
 	kubectl logs -f -l job-name=job1 -n rabbitmq
+delete-job:
+	kubectl delete -f job.yaml
+
+run: scale-worker build-worker deploy-worker launch-job
+clean: delete-job delete-scale-worker delete-worker
