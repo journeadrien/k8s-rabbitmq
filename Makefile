@@ -19,6 +19,10 @@ log-worker:
 	kubectl logs --tail=50 -l app=worker --namespace rabbitmq
 exec-worker:
 	kubectl run -i --tty  redis-worker:v1 --image=rabbitmq-worker:v1 sh
+stop-worker:
+	kubectl delete -f worker-deployment.yaml
+scale-worker:
+	kubectl replace --force -f hpa-v2.yml
 
 # create job
 build-job:
