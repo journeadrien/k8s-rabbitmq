@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import pika, sys, os, time
+import yfinance as yf
 RABBITMQ_HOST = os.environ["RABBITMQ_HOST"]
 print("Worker init")
 def main():
@@ -12,9 +13,9 @@ def main():
     channel.queue_declare(queue='hello', auto_delete=True)
 
     def callback(ch, method, properties, body):
+        symbol = body.decode()
         print(" [x] Received %r" % body.decode())
-        for _ in range(10000):
-            factorielle(100)
+        yf_request(symbol)
         print(" [x] Done")
         ch.basic_ack(delivery_tag = method.delivery_tag)
 
@@ -23,6 +24,10 @@ def main():
 
     print(' [*] Waiting for messages. To exit press CTRL+C')
     channel.start_consuming()
+
+def yf_request(symbol):
+    data = yf.download(symbol, start="2017-01-01", end="2017-04-30")
+    return None
 
 def factorielle(n):
     """Ceci est une fonction récursive qui appelle

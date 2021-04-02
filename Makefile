@@ -6,6 +6,8 @@ create-namespace:
 # local registy: eval $(minikube docker-env)
 deploy-rabbitmq:
 	kubectl replace --force -f rabbitmq-definition.yaml
+delete-rabbitmq:
+	kubectl delete -f rabbitmq-definition.yaml
 log-rabbitmq:
 	kubectl logs rabbitmq-master-server-0 --tail=50 --namespace rabbitmq
 ui-rabbitmq:
@@ -38,5 +40,5 @@ log-job:
 delete-job:
 	kubectl delete -f job.yaml
 
-run: scale-worker build-worker deploy-worker launch-job
-clean: delete-job delete-scale-worker delete-worker
+run: build-worker deploy-worker launch-job
+clean: delete-job delete-worker delete-scale-worker
