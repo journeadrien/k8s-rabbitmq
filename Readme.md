@@ -1,6 +1,11 @@
-# Préparation de l'environement
+# RabbitMQ Horizontal-Scaling on kubernetes cluster.
 
-1. `minikube start`
+Auto-scaling of workers that receive messages from a job RabbitMQ queue. In this example a worker receives a Nasdaq Symbol and dowload some data with yahoo-finance. When adding a massive amount of queue messages, multiple pods opens and performed this simple tasks at a high speed.
+
+
+## Prerequisites
+
+1. Kubernetes cluster: Minikube for instance.
 2. Registre docker pour minikube (qui tourne sur une VM hors de l'OS du host) `eval $(minikube docker-env)`
 
 # Litterature
