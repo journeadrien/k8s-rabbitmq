@@ -40,5 +40,6 @@ log-job:
 delete-job:
 	kubectl delete -f job.yaml
 
-run: build-worker deploy-worker launch-job
+build: build-worker build-job
+run: scale-worker  deploy-worker  launch-job
 clean: delete-job delete-worker delete-scale-worker
