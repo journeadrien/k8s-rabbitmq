@@ -25,10 +25,6 @@ exec-worker:
 	kubectl run -i --tty  redis-worker:v1 --image=rabbitmq-worker:v1 sh
 stop-worker:
 	kubectl delete -f worker-deployment.yaml
-scale-worker:
-	kubectl replace --force -f hpa-v2.yaml
-delete-scale-worker:
-	kubectl delete -f hpa-v2.yaml
 
 # create job
 build-job:
@@ -40,5 +36,6 @@ log-job:
 delete-job:
 	kubectl delete -f job.yaml
 
-run: build-worker deploy-worker launch-job
-clean: delete-job delete-worker delete-scale-worker
+build: build-worker build-job
+run: deploy-worker launch-job
+clean: delete-job delete-worker

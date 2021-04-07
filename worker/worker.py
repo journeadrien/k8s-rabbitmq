@@ -29,13 +29,7 @@ def yf_request(symbol):
     data = yf.download(symbol, start="2017-01-01", end="2017-04-30")
     return None
 
-def factorielle(n):
-    """Ceci est une fonction récursive qui appelle
-   lui-même pour trouver la factorielle du nombre donné"""
-    if n == 1:
-        return n
-    else:
-        return n * factorielle(n - 1)
+
 
 if __name__ == '__main__':
     main()
