@@ -26,9 +26,9 @@ exec-worker:
 stop-worker:
 	kubectl delete -f worker-deployment.yaml
 scale-worker:
-	kubectl replace --force -f hpa-v2.yaml
+	kubectl replace --force -f hpa.yaml
 delete-scale-worker:
-	kubectl delete -f hpa-v2.yaml
+	kubectl delete -f hpa.yaml
 
 # create job
 build-job:
