@@ -7,9 +7,9 @@ Auto-scaling of consumers that receive messages from a RabbitMQ working queue fi
 
 ## Project Goal
 
-The main idea of this project is to used the power of k8s pods auto-scaling to deliver a higher speed than just parallelism on one machine. Because some tasks as for example web requests can be speed limited based on IP address or because of the limited resources of one machine at a peek of messages.
+The main idea of this project is to used the power of k8s pods auto-scaling to deliver a higher speed than just parallelism on one machine. In deed at a peek of messages, one machine ressources can easily be overwhelm. Also some task can't be parallelise on one machine due to limitation from external process, this is the case of downloading data from yahoo that will reduce the download rate by address IP
 
-In this example a worker receives a Nasdaq Symbol and download some data with yahoo-finance. When adding a massive amount of queue messages, multiple pods opens and performed this simple tasks at higher rate than on machine.
+In this example a worker receives a Nasdaq Symbol and download some data with yahoo-finance. When adding a massive amount of queue messages, multiple pods opens and performed this simple tasks at higher rate.
 
 
 ## Prerequisites
