@@ -8,7 +8,7 @@ You will find **two auto-scaling strategies** on two different branches:
 - hpa-keda: Horizontal scaling based on queue length.
 
 <p align="center">
-  <img src="Architecture.svg" width="33%">
+  <img src="Architecture.svg" width="50%">
 </p>
 
 ## Project Goal
