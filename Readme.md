@@ -5,6 +5,10 @@ Auto-scaling of consumers that receive messages from a RabbitMQ working queue fi
 - hpa-cpu: Horizontal scaling based on worker pods cpu.
 - hpa-keda: Horizontal scaling based on queue length.
 
+<p align="center">
+  <img src="Architecture.svg" width="33%">
+</p>
+
 ## Project Goal
 
 The main idea of this project is to used the power of k8s pods auto-scaling to deliver a higher speed than just parallelism on one machine. In deed at a peek of messages, one machine ressources can easily be overwhelm. Also some task can't be parallelise on one machine due to limitation from external process, this is the case of downloading data from yahoo that will reduce the download rate by address IP
